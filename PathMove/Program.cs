@@ -8,7 +8,7 @@ namespace PathMove
     {
         public static float Time { get; set; }
         private static float _maxDistance = 0.5f;
-        private static float _divide = 5.0f;
+        
 
         static void Main(string[] args)
         {
@@ -58,9 +58,9 @@ namespace PathMove
                 timeCounter++;
 
                 // Action here ...
-                if(!action1Finished)
+                if(!moveActionFinished)
                 {
-                    Action1();
+                    MoveAction(obj, target);
                 }
 
                 System.Console.WriteLine($"Game loop thread, seconds: {timeCounter}");
@@ -68,23 +68,24 @@ namespace PathMove
             System.Console.WriteLine("Exit game loop");
         }
 
-        static bool action1Finished = false;
-        static void Action1()
+        static bool moveActionFinished = false;
+        static void MoveAction(ITransformComponent transform1, ITransformComponent transform2)
         {
-                Vector2 dirvector = GetDirectionVector(obj.X, obj.Y, target.X, target.Y);
+                Vector2 dirvector = Vector2E.GetDirectionVector(transform1, transform2);
                 System.Console.WriteLine($"Direction vector is: {dirvector}");
 
                 if(dirvector.X < _maxDistance && dirvector.Y < _maxDistance)
                 {
                     System.Console.WriteLine($"Finish move, steps: {timeCounter}");
-                    action1Finished = true;
+                    moveActionFinished = true;
                     return;
                 }
                 
-                Vector2 moveVector = GetMoveVector(dirvector);
-                obj.X += moveVector.X;
-                obj.Y += moveVector.Y;
-                System.Console.WriteLine($"Obj position is: {obj}");
+                Vector2 moveVector = Vector2E.GetMoveVector(dirvector);
+                transform1.X += moveVector.X;
+                transform1.Y += moveVector.Y;
+
+                System.Console.WriteLine($"Obj position is: {transform1}");
                 System.Console.WriteLine("------------------");
         }
 
@@ -99,40 +100,7 @@ namespace PathMove
             System.Console.WriteLine("Exit console input thread");
         }
 
-        private static Vector2 GetMoveVector(Vector2 directionVector)
-        {
-            var moveVector = Vector2.Normalize(directionVector);
-            moveVector = moveVector / _divide;
-            System.Console.WriteLine($"Move vector is: {moveVector}");
-            return moveVector;
-        }
 
-        private static Vector2 GetDirectionVector(float x1, float y1, float x2, float y2)
-        {
-            return new Vector2
-            (
-                x2 - x1,
-                y2 - y1
-            );
-        }
     }
 
-    
-
-    public class Obj
-    {
-        public float X { get; set; }
-        public float Y { get; set; }
-
-        public override string ToString()
-        {
-            return $"<{X} {Y}>";
-        }
-    }
-
-    public struct Point
-    {
-        public float X { get; set; }
-        public float Y { get; set; }
-    }
 }
