@@ -7,9 +7,6 @@ namespace PathMove
     class Program
     {
         private static bool exitCommand = false;
-
-        public static bool ExitCommand {get => exitCommand;}
-
         private static Game game;
 
         static void Main(string[] args)
@@ -40,7 +37,7 @@ namespace PathMove
 
         static void GameLoop()
         {
-            while(!Program.ExitCommand)
+            while(!Program.exitCommand)
             {
                 Thread.Sleep(100);
                 game.GameLoop();
