@@ -30,7 +30,7 @@ namespace PathMove
             while(!exitCommand)
             {
                 Thread.Sleep(50);
-                exitCommand = System.Console.ReadKey(intercept: true).Key == ConsoleKey.Escape;
+                //exitCommand = System.Console.ReadKey(intercept: true).Key == ConsoleKey.Escape;
             }
             System.Console.WriteLine("Exit console input thread");
         }

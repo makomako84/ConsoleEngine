@@ -6,5 +6,7 @@ namespace PathMove
         void AddComponent(IComponent component);
         void RemoveComponent(IComponent component);
         IComponent GetComponent<T>();
+
+        void Update();
     }
 }
