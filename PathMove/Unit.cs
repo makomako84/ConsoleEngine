@@ -6,59 +6,52 @@
     Это его компонента - двигаться.
 */
 
+/*
+    Unit просто движется по точке.
+    А некий Director (PathMove)
+    в данном случае управляет
+    Движением юнита.
+    Двигаться - это главное свойство юнита,
+    его воля внутри трехмерного пространства.
+*/
+
 using System.Numerics;
 using System.Collections.Generic;
 
 namespace PathMove
 {
-    public class Unit : ITransformComponent
+    public class Unit : ITransformComponent, IPathActor
     {
         public float X { get; set; }
         public float Y { get; set; }
 
-        private float speed = 0.1f;
-        private Vector2 targetPosition;
-        private Vector2 currentPosition;
-
-
         private ITransformComponent target;
+        private IPathDirector pathDirector;
+        private PathActorState state;
 
         private float _maxDistance = 0.5f;
 
+
+
+        public Unit(
+            IPathDirector pathDirector)
+        { 
+            this.pathDirector = pathDirector;
+            state = PathActorState.Wait;
+        }
+
         /*
-            Некоторый источник CurrentPosition
-            Не обязательно внутри класса.
+            Должно возникнуть некое событие - 
+            движение закончилось.
         */
-        protected Vector2 CurrentPosition
-        {
-            get => currentPosition;
-        }
-
-
-        public void Move()
-        {
-            if(CurrentPosition == targetPosition)
-            {
-                targetPosition = GetNext();
-            }
-            else
-            {
-                Vector2 dir = currentPosition - targetPosition;
-                dir = Vector2.Normalize(dir);
-                currentPosition += dir * speed;
-            }
-            System.Console.WriteLine($"cur: {currentPosition}, targ: {targetPosition}");
-        }
-
         public void Update(int timeCounter)
         {
-            if(!moveActionFinished)
+            if(state == PathActorState.Move)
             {
                 MoveAction(this, target, timeCounter);
             }
         }
 
-        bool moveActionFinished = false;
         void MoveAction(ITransformComponent transform1, ITransformComponent transform2, int timeCounter)
         {
                 Vector2 dirvector = Vector2E.GetDirectionVector(transform1, transform2);
@@ -67,7 +60,8 @@ namespace PathMove
                 if(dirvector.X < _maxDistance && dirvector.Y < _maxDistance)
                 {
                     System.Console.WriteLine($"Finish move, steps: {timeCounter}");
-                    moveActionFinished = true;
+                    state = PathActorState.Wait;
+                    PathFinishedNotify();
                     return;
                 }
                 
@@ -79,24 +73,22 @@ namespace PathMove
                 System.Console.WriteLine("------------------");
         }
 
-
-        private static int index = 0;
-        private static List<Vector2> source = new List<Vector2>()
+#region IPathActor
+        public void PathFinishedNotify()
         {
-            new Vector2(0,0),
-            new Vector2(1,1),
-            new Vector2(1,2)
-        };
+            pathDirector.UpdateDirection();
+        }
 
-        public Unit(ITransformComponent target)
+        public void InitializeMove(ITransformComponent target)
         {
             this.target = target;
+            state = PathActorState.Move;
         }
 
-        private Vector2 GetNext()
+        public void FinishMove()
         {
-            index++;
-            return source[index]; 
+            state = PathActorState.Wait;
         }
+        #endregion
     }
 }
