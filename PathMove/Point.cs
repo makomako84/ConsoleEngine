@@ -1,6 +1,6 @@
 namespace PathMove
 {
-    public struct Point : ITransformComponent
+    public class Point : Entity, ITransformComponent
     {
         public float X { get; set; }
         public float Y { get; set; }

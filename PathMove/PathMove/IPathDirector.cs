@@ -2,6 +2,7 @@ namespace PathMove
 {
     public interface IPathDirector
     {
-        void UpdateDirection();
+        void AttachActor(IPathActor actor);
+        void UpdateActorDirection();
     }
 }

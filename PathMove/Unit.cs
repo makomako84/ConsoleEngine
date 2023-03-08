@@ -20,16 +20,17 @@ using System.Collections.Generic;
 
 namespace PathMove
 {
-    public class Unit : ITransformComponent, IPathActor
+    public class Unit : Entity, ITransformComponent, IPathActor
     {
         public float X { get; set; }
         public float Y { get; set; }
+
 
         private ITransformComponent target;
         private IPathDirector pathDirector;
         private PathActorState state;
 
-        private float _maxDistance = 0.5f;
+        private float _maxDistance = 0.15f;
 
 
 
@@ -59,8 +60,10 @@ namespace PathMove
 
                 if(dirvector.X < _maxDistance && dirvector.Y < _maxDistance)
                 {
-                    System.Console.WriteLine($"Finish move, steps: {timeCounter}");
                     state = PathActorState.Wait;
+                    System.Console.WriteLine($"Finish move, steps: {timeCounter}");
+                    System.Console.WriteLine($"State is: {state}");
+                    System.Console.WriteLine("=======================");
                     PathFinishedNotify();
                     return;
                 }
@@ -69,14 +72,17 @@ namespace PathMove
                 transform1.X += moveVector.X;
                 transform1.Y += moveVector.Y;
 
-                System.Console.WriteLine($"Obj position is: {transform1}");
+                System.Console.WriteLine($"Obj position is: {transform1.X}, {transform1.Y}");
+                System.Console.WriteLine($"Target position is: {transform2.X}, {transform2.Y}");
+                System.Console.WriteLine($"Target name is: {(transform2 as Entity).Name}");
+                System.Console.WriteLine($"State is: {state}");
                 System.Console.WriteLine("------------------");
         }
 
 #region IPathActor
         public void PathFinishedNotify()
         {
-            pathDirector.UpdateDirection();
+            pathDirector.UpdateActorDirection();
         }
 
         public void InitializeMove(ITransformComponent target)

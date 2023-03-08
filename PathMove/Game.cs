@@ -16,11 +16,14 @@ namespace PathMove
 
         private void Initialize()
         {
+            pathDirector = new PathDirector();
+
             unit = new Unit(pathDirector);
             unit.X = 0.0f;
             unit.Y = 0.0f;
+            unit.Name = "John Cena";
 
-            pathDirector = new PathDirector(unit);
+            pathDirector.AttachActor(unit);
             pathDirector.Initialize();
             System.Console.WriteLine($"Unit position is: {unit}");
         }

@@ -15,17 +15,15 @@ namespace PathMove
         private  int targetPositionIndex;
         private List<ITransformComponent> source = new List<ITransformComponent>()
         {
-            new Point(0, 0),
-            new Point(1, 1),
-            new Point(1, 2)
+            new Point(0, 0) { Name = "Point1"},
+            new Point(1, 1) { Name = "Point2"},
+            new Point(1, 2) { Name = "Point3"},
+            new Point(2, 4) { Name = "Point4"},
+            new Point(5, 5) { Name = "Point5"}
         };
 
         IPathActor actor;
 
-        public PathDirector(IPathActor actor)
-        {
-            this.actor = actor;
-        }
 
         public void Initialize()
         {
@@ -33,15 +31,25 @@ namespace PathMove
             actor.InitializeMove(source[targetPositionIndex]);
         }
 
-        public void UpdateDirection()
+        public void AttachActor(IPathActor actor)
+        {
+            this.actor = actor;
+        }
+
+
+
+        public void UpdateActorDirection()
         {      
             targetPositionIndex++;
+            System.Console.WriteLine($"PathDirector.Update: targetPositionIndex: {targetPositionIndex}");
             if(targetPositionIndex < source.Count)
             {
+                System.Console.WriteLine("SET NEW TARGET");
                 actor.InitializeMove(source[targetPositionIndex]);
             }
             else
             {
+                System.Console.WriteLine("FINISH MOVE");
                 actor.FinishMove();
             }
         }
