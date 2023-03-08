@@ -23,7 +23,7 @@ namespace PathMove
             );
         }
 
-        public static Vector2 GetDirectionVector(ITransformComponent transform1, ITransformComponent transform2)
+        public static Vector2 GetDirectionVector(ITransformable transform1, ITransformable transform2)
         {
             return new Vector2
             (

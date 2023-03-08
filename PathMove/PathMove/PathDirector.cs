@@ -13,7 +13,7 @@ namespace PathMove
     public class PathDirector : IPathDirector
     {
         private  int targetPositionIndex;
-        private List<ITransformComponent> source = new List<ITransformComponent>()
+        private List<ITransformable> source = new List<ITransformable>()
         {
             new Point(0, 0) { Name = "Point1"},
             new Point(1, 1) { Name = "Point2"},

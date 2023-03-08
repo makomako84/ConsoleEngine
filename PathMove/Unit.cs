@@ -20,13 +20,13 @@ using System.Collections.Generic;
 
 namespace PathMove
 {
-    public class Unit : Entity, ITransformComponent, IPathActor
+    public class Unit : Entity, ITransformable, IPathActor
     {
         public float X { get; set; }
         public float Y { get; set; }
 
 
-        private ITransformComponent target;
+        private ITransformable target;
         private IPathDirector pathDirector;
         private PathActorState state;
 
@@ -53,7 +53,7 @@ namespace PathMove
             }
         }
 
-        void MoveAction(ITransformComponent transform1, ITransformComponent transform2, int timeCounter)
+        void MoveAction(ITransformable transform1, ITransformable transform2, int timeCounter)
         {
                 Vector2 dirvector = Vector2E.GetDirectionVector(transform1, transform2);
                 System.Console.WriteLine($"Direction vector is: {dirvector}");
@@ -85,7 +85,7 @@ namespace PathMove
             pathDirector.UpdateActorDirection();
         }
 
-        public void InitializeMove(ITransformComponent target)
+        public void InitializeMove(ITransformable target)
         {
             this.target = target;
             state = PathActorState.Move;

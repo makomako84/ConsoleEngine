@@ -4,7 +4,7 @@ namespace PathMove
 {
     public interface IPathActor
     {
-        void InitializeMove(ITransformComponent target);
+        void InitializeMove(ITransformable target);
         void FinishMove();
         void PathFinishedNotify();
     }
