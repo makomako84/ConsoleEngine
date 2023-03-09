@@ -1,6 +1,6 @@
 using System.Threading;
 
-namespace PathMove
+namespace ConsoleEngine
 {
     public class Game
     {

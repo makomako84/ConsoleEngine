@@ -1,6 +1,6 @@
 using System.Numerics;
 
-namespace PathMove
+namespace ConsoleEngine
 {
     public static class Vector2E
     {

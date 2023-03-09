@@ -18,7 +18,7 @@
 using System.Numerics;
 using System.Collections.Generic;
 
-namespace PathMove
+namespace ConsoleEngine
 {
     public class Unit : Entity, ITransformable, IPathActor
     {

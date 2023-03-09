@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System;
 
-namespace PathMove
+namespace ConsoleEngine
 {
     public abstract class ComponentEntity : Entity, IComponent
     {

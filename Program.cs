@@ -2,7 +2,7 @@
 using System.Numerics;
 using System.Threading;
 
-namespace PathMove
+namespace ConsoleEngine
 {
     class Program
     {

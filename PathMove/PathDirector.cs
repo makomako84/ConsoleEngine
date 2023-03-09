@@ -1,7 +1,7 @@
 using System.Numerics;
 using System.Collections.Generic;
 
-namespace PathMove
+namespace ConsoleEngine
 {
     /*
         Когда в Unit происходит событие Finished

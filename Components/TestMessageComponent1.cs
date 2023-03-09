@@ -1,4 +1,4 @@
-namespace PathMove
+namespace ConsoleEngine
 {
     public class TestMessageComponent1 : TestBaseMessageComponent
     {
